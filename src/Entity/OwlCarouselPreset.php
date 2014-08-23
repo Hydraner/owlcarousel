@@ -9,18 +9,9 @@
 
 namespace Drupal\owlcarousel\Entity;
 
-// use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
-// use Drupal\Core\Entity\EntityStorageInterface;
-// use Drupal\Core\Entity\EntityWithPluginBagsInterface;
-// use Drupal\Core\Routing\RequestHelper;
-use Drupal\Core\Site\Settings;
-// use Drupal\image\ImageEffectBag;
-// use Drupal\image\ImageEffectInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\owlcarousel\OwlCarouselPresetInterface;
-// use Drupal\Component\Utility\Crypt;
-// use Drupal\Component\Utility\UrlHelper;
-// use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * Defines an Owl Carousel preset configuration entity.
@@ -48,7 +39,9 @@ use Drupal\owlcarousel\OwlCarouselPresetInterface;
  *   }
  * )
  */
-class OwlCarouselPreset extends ConfigEntityBase implements OwlCarouselPresetInterface/*, EntityWithPluginBagsInterface*/ {
+class OwlCarouselPreset extends ConfigEntityBase implements OwlCarouselPresetInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The Owl Carousel preset label.
@@ -71,6 +64,32 @@ class OwlCarouselPreset extends ConfigEntityBase implements OwlCarouselPresetInt
    */
   protected $replacementID;
 
+  public $items = 3;
+  public $margin = 0;
+  public $mouse_drag = TRUE;
+  public $touch_drag = TRUE;
+  public $pull_drag = TRUE;
+  public $stage_padding = 0;
+  public $merge_fit = TRUE;
+  public $start_position = 0;
+  public $nav_rewind = TRUE;
+  public $nav_prev = 'prev';
+  public $nav_next = 'next';
+  public $slide_by = 1;
+  public $dots = TRUE;
+  public $dots_each = 0;
+  public $autoplay_timeout = 5000;
+  public $smart_speed = 250;
+  public $fluid_speed = 250;
+  public $autoplay_speed = 0;
+  public $nav_speed = 0;
+  public $dots_speed = 0;
+  public $responsive_refresh_rate = 200;
+  public $responsive_base_element = 'window';
+  public $fallback_easing = 'swing';
+  public $item_element = 'div';
+  public $stage_element = 'div';
+
   /**
    * Overrides Drupal\Core\Entity\Entity::id().
    */
@@ -81,205 +100,9 @@ class OwlCarouselPreset extends ConfigEntityBase implements OwlCarouselPresetInt
   /**
    * {@inheritdoc}
    */
-  /*public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    parent::postSave($storage, $update);
-
-    if ($update) {
-      if (!empty($this->original) && $this->id() !== $this->original->id()) {
-        // The old image style name needs flushing after a rename.
-        $this->original->flush();
-        // Update field instance settings if necessary.
-        if (!$this->isSyncing()) {
-          static::replaceImageStyle($this);
-        }
-      }
-      else {
-        // Flush image style when updating without changing the name.
-        $this->flush();
-      }
-    }
-  }*/
-
-  /**
-   * {@inheritdoc}
-   */
-  /*public static function postDelete(EntityStorageInterface $storage, array $entities) {
-    parent::postDelete($storage, $entities);
-
-    foreach ($entities as $style) {
-      // Flush cached media for the deleted style.
-      $style->flush();
-      // Check whether field instance settings need to be updated.
-      // In case no replacement style was specified, all image fields that are
-      // using the deleted style are left in a broken state.
-      if (!$style->isSyncing() && $new_id = $style->getReplacementID()) {
-        // The deleted ID is still set as originalID.
-        $style->setName($new_id);
-        static::replaceImageStyle($style);
-      }
-    }
-  }*/
-
-  /**
-   * Update field instance settings if the image style name is changed.
-   *
-   * @param \Drupal\image\ImageStyleInterface $style
-   *   The image style.
-   */
-  /*protected static function replaceImageStyle(ImageStyleInterface $style) {
-    if ($style->id() != $style->getOriginalId()) {
-      // Loop through all entity displays looking for formatters / widgets using
-      // the image style.
-      foreach (entity_load_multiple('entity_view_display') as $display) {
-        foreach ($display->getComponents() as $name => $options) {
-          if (isset($options['type']) && $options['type'] == 'image' && $options['settings']['image_style'] == $style->getOriginalId()) {
-            $options['settings']['image_style'] = $style->id();
-            $display->setComponent($name, $options)
-              ->save();
-          }
-        }
-      }
-      foreach (entity_load_multiple('entity_form_display') as $display) {
-        foreach ($display->getComponents() as $name => $options) {
-          if (isset($options['type']) && $options['type'] == 'image_image' && $options['settings']['preview_image_style'] == $style->getOriginalId()) {
-            $options['settings']['preview_image_style'] = $style->id();
-            $display->setComponent($name, $options)
-              ->save();
-          }
-        }
-      }
-    }
-  }*/
-
-  /**
-   * {@inheritdoc}
-   */
-  /*public function buildUri($uri) {
-    $scheme = file_uri_scheme($uri);
-    if ($scheme) {
-      $path = file_uri_target($uri);
-    }
-    else {
-      $path = $uri;
-      $scheme = file_default_scheme();
-    }
-    return $scheme . '://styles/' . $this->id() . '/' . $scheme . '/' . $path;
-  }*/
-
-  /**
-   * {@inheritdoc}
-   */
-  /*public function buildUrl($path, $clean_urls = NULL) {
-    $uri = $this->buildUri($path);
-    // The token query is added even if the
-    // 'image.settings:allow_insecure_derivatives' configuration is TRUE, so
-    // that the emitted links remain valid if it is changed back to the default
-    // FALSE. However, sites which need to prevent the token query from being
-    // emitted at all can additionally set the
-    // 'image.settings:suppress_itok_output' configuration to TRUE to achieve
-    // that (if both are set, the security token will neither be emitted in the
-    // image derivative URL nor checked for in
-    // \Drupal\image\ImageStyleInterface::deliver()).
-    $token_query = array();
-    if (!\Drupal::config('image.settings')->get('suppress_itok_output')) {
-      // The passed $path variable can be either a relative path or a full URI.
-      $original_uri = file_uri_scheme($path) ? file_stream_wrapper_uri_normalize($path) : file_build_uri($path);
-      $token_query = array(IMAGE_DERIVATIVE_TOKEN => $this->getPathToken($original_uri));
-    }
-
-    if ($clean_urls === NULL) {
-      // Assume clean URLs unless the request tells us otherwise.
-      $clean_urls = TRUE;
-      try {
-        $request = \Drupal::request();
-        $clean_urls = RequestHelper::isCleanUrl($request);
-      }
-      catch (ServiceNotFoundException $e) {
-      }
-    }
-
-    // If not using clean URLs, the image derivative callback is only available
-    // with the script path. If the file does not exist, use url() to ensure
-    // that it is included. Once the file exists it's fine to fall back to the
-    // actual file path, this avoids bootstrapping PHP once the files are built.
-    if ($clean_urls === FALSE && file_uri_scheme($uri) == 'public' && !file_exists($uri)) {
-      $directory_path = file_stream_wrapper_get_instance_by_uri($uri)->getDirectoryPath();
-      return url($directory_path . '/' . file_uri_target($uri), array('absolute' => TRUE, 'query' => $token_query));
-    }
-
-    $file_url = file_create_url($uri);
-    // Append the query string with the token, if necessary.
-    if ($token_query) {
-      $file_url .= (strpos($file_url, '?') !== FALSE ? '&' : '?') . UrlHelper::buildQuery($token_query);
-    }
-
-    return $file_url;
-  }*/
-
-  /**
-   * {@inheritdoc}
-   */
-  /*public function flush($path = NULL) {
-    // A specific image path has been provided. Flush only that derivative.
-    if (isset($path)) {
-      $derivative_uri = $this->buildUri($path);
-      if (file_exists($derivative_uri)) {
-        file_unmanaged_delete($derivative_uri);
-      }
-      return $this;
-    }
-
-    // Delete the style directory in each registered wrapper.
-    $wrappers = file_get_stream_wrappers(STREAM_WRAPPERS_WRITE_VISIBLE);
-    foreach ($wrappers as $wrapper => $wrapper_data) {
-      if (file_exists($directory = $wrapper . '://styles/' . $this->id())) {
-        file_unmanaged_delete_recursive($directory);
-      }
-    }
-
-    // Let other modules update as necessary on flush.
-    $module_handler = \Drupal::moduleHandler();
-    $module_handler->invokeAll('image_style_flush', array($this));
-
-    // Clear caches so that formatters may be added for this style.
-    drupal_theme_rebuild();
-
-    Cache::invalidateTags($this->getCacheTag());
-
-    return $this;
-  }*/
-
-  /**
-   * {@inheritdoc}
-   */
-  /*public function createDerivative($original_uri, $derivative_uri) {
-    // Get the folder for the final location of this style.
-    $directory = drupal_dirname($derivative_uri);
-
-    // Build the destination folder tree if it doesn't already exist.
-    if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
-      watchdog('image', 'Failed to create style directory: %directory', array('%directory' => $directory), WATCHDOG_ERROR);
-      return FALSE;
-    }
-
-    $image = \Drupal::service('image.factory')->get($original_uri);
-    if (!$image->isValid()) {
-      return FALSE;
-    }
-
-    foreach ($this->getEffects() as $effect) {
-      $effect->applyEffect($image);
-    }
-
-    if (!$image->save($derivative_uri)) {
-      if (file_exists($derivative_uri)) {
-        watchdog('image', 'Cached image file %destination already exists. There may be an issue with your rewrite configuration.', array('%destination' => $derivative_uri), WATCHDOG_ERROR);
-      }
-      return FALSE;
-    }
-
-    return TRUE;
-  }*/
+  public function getLabel() {
+    return $this->get('label');
+  }
 
   /**
    * {@inheritdoc}

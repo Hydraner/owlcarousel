@@ -11,8 +11,8 @@ namespace Drupal\owlcarousel\Form;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\image\ConfigurableImageEffectInterface;
-use Drupal\image\ImageEffectManager;
 use Drupal\Component\Utility\String;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -20,25 +20,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Controller for image style edit form.
  */
 class OwlCarouselPresetEditForm extends OwlCarouselPresetFormBase {
-
   /**
-   * The image effect manager service.
-   *
-   * @var \Drupal\image\ImageEffectManager
+   * @var EntityStorageInterface
    */
-  protected $imageEffectManager;
+  private $owl_carouse_preset;
 
   /**
    * Constructs an ImageStyleEditForm object.
-   *
-   * @param \Drupal\Core\Entity\EntityStorageInterface $image_style_storage
-   *   The storage.
-   * @param \Drupal\image\ImageEffectManager $image_effect_manager
-   *   The image effect manager service.
    */
-  public function __construct(EntityStorageInterface $image_style_storage, ImageEffectManager $image_effect_manager) {
-    parent::__construct($image_style_storage);
-    $this->imageEffectManager = $image_effect_manager;
+  public function __construct(EntityStorageInterface $owl_carouse_preset) {
+    parent::__construct($owl_carouse_preset);
+    $this->owl_carouse_preset = $owl_carouse_preset;
   }
 
   /**
@@ -46,110 +38,14 @@ class OwlCarouselPresetEditForm extends OwlCarouselPresetFormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager')->getStorage('image_style'),
-      $container->get('plugin.manager.image.effect')
+      $container->get('entity.manager')->getStorage('owlcarousel_preset')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function form(array $form, array &$form_state) {
-    $form['#title'] = $this->t('Edit style %name', array('%name' => $this->entity->label()));
-    $form['#tree'] = TRUE;
-    $form['#attached']['css'][drupal_get_path('module', 'image') . '/css/image.admin.css'] = array();
-
-    // Show the thumbnail preview.
-    $preview_arguments = array('#theme' => 'image_style_preview', '#style' => $this->entity);
-    $form['preview'] = array(
-      '#type' => 'item',
-      '#title' => $this->t('Preview'),
-      '#markup' => drupal_render($preview_arguments),
-      // Render preview above parent elements.
-      '#weight' => -5,
-    );
-
-    // Build the list of existing image effects for this image style.
-    $form['effects'] = array(
-      '#theme' => 'image_style_effects',
-      // Render effects below parent elements.
-      '#weight' => 5,
-    );
-    foreach ($this->entity->getEffects() as $effect) {
-      $key = $effect->getUuid();
-      $form['effects'][$key]['#weight'] = isset($form_state['input']['effects']) ? $form_state['input']['effects'][$key]['weight'] : NULL;
-      $form['effects'][$key]['label'] = array(
-        '#markup' => String::checkPlain($effect->label()),
-      );
-      $form['effects'][$key]['summary'] = $effect->getSummary();
-      $form['effects'][$key]['weight'] = array(
-        '#type' => 'weight',
-        '#title' => $this->t('Weight for @title', array('@title' => $effect->label())),
-        '#title_display' => 'invisible',
-        '#default_value' => $effect->getWeight(),
-      );
-
-      $links = array();
-      $is_configurable = $effect instanceof ConfigurableImageEffectInterface;
-      if ($is_configurable) {
-        $links['edit'] = array(
-          'title' => $this->t('Edit'),
-          'href' => 'admin/config/media/image-styles/manage/' . $this->entity->id() . '/effects/' . $key,
-        );
-      }
-      $links['delete'] = array(
-        'title' => $this->t('Delete'),
-        'href' => 'admin/config/media/image-styles/manage/' . $this->entity->id() . '/effects/' . $key . '/delete',
-      );
-      $form['effects'][$key]['operations'] = array(
-        '#type' => 'operations',
-        '#links' => $links,
-      );
-      $form['effects'][$key]['configure'] = array(
-        '#type' => 'link',
-        '#title' => $this->t('Edit'),
-        '#href' => 'admin/config/media/image-styles/manage/' . $this->entity->id() . '/effects/' . $key,
-        '#access' => $is_configurable,
-      );
-      $form['effects'][$key]['remove'] = array(
-        '#type' => 'link',
-        '#title' => $this->t('Delete'),
-        '#href' => 'admin/config/media/image-styles/manage/' . $this->entity->id() . '/effects/' . $key . '/delete',
-      );
-    }
-
-    // Build the new image effect addition form and add it to the effect list.
-    $new_effect_options = array();
-    $effects = $this->imageEffectManager->getDefinitions();
-    uasort($effects, function ($a, $b) {
-      return strcasecmp($a['id'], $b['id']);
-    });
-    foreach ($effects as $effect => $definition) {
-      $new_effect_options[$effect] = $definition['label'];
-    }
-    $form['effects']['new'] = array(
-      '#tree' => FALSE,
-      '#weight' => isset($form_state['input']['weight']) ? $form_state['input']['weight'] : NULL,
-    );
-    $form['effects']['new']['new'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Effect'),
-      '#title_display' => 'invisible',
-      '#options' => $new_effect_options,
-      '#empty_option' => $this->t('Select a new effect'),
-    );
-    $form['effects']['new']['weight'] = array(
-      '#type' => 'weight',
-      '#title' => $this->t('Weight for new effect'),
-      '#title_display' => 'invisible',
-      '#default_value' => count($form['effects']) - 1,
-    );
-    $form['effects']['new']['add'] = array(
-      '#type' => 'submit',
-      '#value' => $this->t('Add'),
-      '#validate' => array(array($this, 'effectValidate')),
-      '#submit' => array(array($this, 'effectSave')),
-    );
+  public function form(array $form, FormStateInterface $form_state) {
 
     return parent::form($form, $form_state);
   }
@@ -157,7 +53,7 @@ class OwlCarouselPresetEditForm extends OwlCarouselPresetFormBase {
   /**
    * Validate handler for image effect.
    */
-  public function effectValidate($form, &$form_state) {
+  public function effectValidate(array $form, FormStateInterface $form_state) {
     if (!$form_state['values']['new']) {
       $this->setFormError('new', $form_state, $this->t('Select an effect to add.'));
     }
@@ -166,7 +62,7 @@ class OwlCarouselPresetEditForm extends OwlCarouselPresetFormBase {
   /**
    * Submit handler for image effect.
    */
-  public function effectSave($form, &$form_state) {
+  public function effectSave(array $form, FormStateInterface $form_state) {
 
     // Update image effect weights.
     if (!empty($form_state['values']['effects'])) {
@@ -216,7 +112,7 @@ class OwlCarouselPresetEditForm extends OwlCarouselPresetFormBase {
   /**
    * {@inheritdoc}
    */
-  public function save(array $form, array &$form_state) {
+  public function save(array $form, FormStateInterface $form_state) {
 
     // Update image effect weights.
     if (!empty($form_state['values']['effects'])) {
@@ -230,7 +126,7 @@ class OwlCarouselPresetEditForm extends OwlCarouselPresetFormBase {
   /**
    * {@inheritdoc}
    */
-  public function actions(array $form, array &$form_state) {
+  public function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
     $actions['submit']['#value'] = $this->t('Update style');
 
@@ -255,7 +151,7 @@ class OwlCarouselPresetEditForm extends OwlCarouselPresetFormBase {
   /**
    * {@inheritdoc}
    */
-  protected function copyFormValuesToEntity(EntityInterface $entity, array $form, array &$form_state) {
+  protected function copyFormValuesToEntity(EntityInterface $entity, array $form, FormStateInterface $form_state) {
     foreach ($form_state['values'] as $key => $value) {
       // Do not copy effects here, see self::updateEffectWeights().
       if ($key != 'effects') {
