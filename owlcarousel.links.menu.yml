@@ -1,0 +1,5 @@
+owlcarousel.preset_list:
+  title: 'Owl Carousel presets'
+  description: 'Configure presets that can be used for Owl Carousel slideshows on display.'
+  parent: system.admin_config_ui
+  route_name: owlcarousel.preset_list

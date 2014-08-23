@@ -1,0 +1,31 @@
+owlcarousel.preset_list:
+  path: '/admin/config/user-interface/owlcarousel/presets'
+  defaults:
+    _entity_list: 'owlcarousel_preset'
+    _title: 'Owl Carousel presets'
+  requirements:
+    _permission: 'administer owl carousel presets'
+
+owlcarousel.preset_add:
+  path: '/admin/config/user-interface/owlcarousel/presets/add'
+  defaults:
+    _entity_form: owlcarousel_preset.add
+    _title: 'Add preset'
+  requirements:
+    _permission: 'administer owl carousel presets'
+
+owlcarousel.preset_edit:
+  path: '/admin/config/user-interface/owlcarousel/presets/manage/{owlcarousel_preset}'
+  defaults:
+    _entity_form: owlcarousel_preset.edit
+    _title: 'Edit preset'
+  requirements:
+    _permission: 'administer owl carousel presets'
+
+owlcarousel.preset_delete:
+  path: '/admin/config/user-interface/owlcarousel/presets/manage/{owlcarousel_preset}/delete'
+  defaults:
+    _entity_form: 'owlcarousel_preset.delete'
+    _title: 'Delete preset'
+  requirements:
+    _permission: 'administer owl carousel presets'

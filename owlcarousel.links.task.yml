@@ -1,0 +1,9 @@
+owlcarousel.preset_edit:
+  title: 'Edit'
+  route_name: owlcarousel.preset_edit
+  base_route: owlcarousel.preset_edit
+
+owlcarousel.preset_list:
+  title: List
+  route_name: owlcarousel.preset_list
+  base_route: owlcarousel.preset_list

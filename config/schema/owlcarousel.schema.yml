@@ -1,0 +1,11 @@
+# Schema for the configuration files of the Owl Carousel module.
+
+owlcarousel.preset.*:
+  type: config_entity
+  label: 'Owl Carousel preset'
+  mapping:
+    name:
+      type: string
+    label:
+      type: label
+      label: 'Label'

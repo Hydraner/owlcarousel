@@ -1,0 +1,7 @@
+name: Owl Carousel
+description: '???.'
+package: Custom
+type: module
+version: 1.0
+core: 8.x
+configure: owlcarousel.presets

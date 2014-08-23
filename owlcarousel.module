@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ *
+ *@todo file docs
+*/
+
+/**
+ * Implements hook_permission().
+ */
+function owlcarousel_permission() {
+  return array(
+    'administer owl carousel presets' => array(
+      'title' => t('Administer Owl Carousel presets'),
+      'description' => t('Create and modify presets for Owl Carousel slideshows.'),
+    ),
+  );
+}

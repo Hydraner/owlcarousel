@@ -1,0 +1,5 @@
+owlcarousel_preset_add_action:
+  route_name: owlcarousel.preset_add
+  title: 'Add preset'
+  appears_on:
+    - owlcarousel.preset_list
