@@ -6,10 +6,11 @@
  */
 
 namespace Drupal\owlcarousel\Form;
+
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Controller for Owl Carousel preset addition forms.
+ * Controller for Owl Carousel preset addition form.
  */
 class OwlCarouselPresetAddForm extends OwlCarouselPresetFormBase {
 

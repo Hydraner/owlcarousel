@@ -2,12 +2,11 @@
 
 /**
  * @file
- * Definition of Drupal\views_slideshow\Plugin\views\style\ViewsSlideshow.
+ * Definition of Drupal\owlcarousel\Plugin\views\style\ViewsOwlCarousel.
  */
 
 namespace Drupal\owlcarousel\Plugin\views\style;
 
-use Drupal\Core\Config\Entity\ConfigEntityStorageInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\style\StylePluginBase;
@@ -68,7 +67,7 @@ class ViewsOwlCarousel extends StylePluginBase {
   }
 
   /**
-   * Set default options.
+   * {@inheritdoc}
    */
   protected function defineOptions() {
     $options = parent::defineOptions();
@@ -78,7 +77,7 @@ class ViewsOwlCarousel extends StylePluginBase {
   }
 
   /**
-   * Render the given style.
+   * {@inheritdoc}
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);

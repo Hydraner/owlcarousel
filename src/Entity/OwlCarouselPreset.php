@@ -5,8 +5,6 @@
  * Contains \Drupal\owlcarousel\Entity\OwlCarouselPreset.
  */
 
-// @todo preset entity
-
 namespace Drupal\owlcarousel\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;

@@ -24,9 +24,9 @@ owlcarousel.preset.*:
     mouse_drag:
       type: checkbox
       label: 'Mouse Drag'
-    #touch_drag:
+    touch_drag:
       type: checkbox
-      label: '#touch Drag'
+      label: 'touch Drag'
     pull_drag:
       type: checkbox
       label: 'Pull Drag'
