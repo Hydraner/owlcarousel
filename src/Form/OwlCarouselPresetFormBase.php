@@ -57,6 +57,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
    */
   public function form(array $form, FormStateInterface $form_state) {
 
+
     $form['label'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Preset name'),
@@ -72,12 +73,29 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
       '#required' => TRUE,
     );
 
-    $form['items'] = array(
+    $form['basic'] = array(
+      '#type' => 'details',
+      '#title' => t('Basic'),
+      '#open' => TRUE,
+    );
+    $form['basic']['items'] = array(
       '#type' => 'number',
       '#title' => $this->t('Items'),
       '#description' => $this->t('The number of items you want to see on the screen.'),
       '#default_value' => $this->entity->get('items'),
     );
+
+
+//    items : 5,
+//    itemsCustom : false,
+//    itemsDesktop : [1199,4],
+//    itemsDesktopSmall : [980,3],
+//    itemsTablet: [768,2],
+//    itemsTabletSmall: false,
+//    itemsMobile : [479,1],
+//    singleItem : false,
+//    itemsScaleUp : false,
+
     $form['margin'] = array(
       '#type' => 'number',
       '#title' => $this->t('Margin'),
@@ -158,7 +176,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
       '#description' => $this->t('Listen to url hash changes. data-hash on items is required.'),
       '#default_value' => $this->entity->get('url_hash_listener'),
     );
-    $form['nav'] = array(
+    $form['navigation'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Navigation'),
       '#description' => $this->t('Show next/prev buttons.'),

@@ -51,7 +51,7 @@ owlcarousel.preset.*:
     url_hash_listener:
       type: checkbox
       label: 'URL Hash Listener'
-    nav:
+    navigation:
       type: checkbox
       label: 'Navigation'
     nav_rewind:

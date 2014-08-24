@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a view of unformatted rows.
+ * Default theme implementation to display a view of rows as OWL carousel items.
  *
  * Available variables:
  * - title: The title of this group of rows. May be empty.
@@ -9,7 +9,7 @@
  *   - attributes: The row's HTML attributes.
  *   - content: The row's content.
  *
- * @see template_preprocess_views_slideshow()
+ * @see template_preprocess_views_owl_carousel()
  *
  * @ingroup themeable
  */
@@ -22,3 +22,4 @@
     {{ row.content }}
   </div>
 {% endfor %}
+

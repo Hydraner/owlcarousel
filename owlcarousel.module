@@ -49,4 +49,19 @@ function template_preprocess_views_owl_carousel(&$variables) {
     }
     $variables['rows'][$id]['attributes'] = new Attribute($variables['rows'][$id]['attributes']);
   }
+
+}
+
+function owlcarousel_libraries_info() {
+  $library = drupal_get_path('module', 'owlcarousel');
+  $libraries['owlcarousel'] = array(
+    'name' => 'OWL Carousel',
+    'version' => '',
+    'files' => array(
+      'js' => array($library . '/owl.carousel.min.js'),
+//      'css' => array($library . '/assets/owl.carousel.css'),
+    ),
+  );
+
+  return $libraries;
 }
