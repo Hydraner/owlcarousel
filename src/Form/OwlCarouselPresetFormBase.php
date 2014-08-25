@@ -223,7 +223,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
       '#description' => $this->t('Used by data-dot content.'),
       '#default_value' => $this->entity->get('dot_data'),
     );
-    $form['lazy_load'] = array(
+    $form['lazyLoad'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Lazy Load'),
       '#description' => $this->t('Lazy load images. data-src and data-src-retina for highres. Also load images into background inline style if element is not <img>.'),

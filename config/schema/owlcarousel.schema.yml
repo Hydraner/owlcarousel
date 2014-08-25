@@ -77,7 +77,7 @@ owlcarousel.preset.*:
     dot_data:
       type: checkbox
       label: 'Dot Data'
-    lazy_load:
+    lazyLoad:
       type: checkbox
       label: 'Lazy Load'
     lazy_content:

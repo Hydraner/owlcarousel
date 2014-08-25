@@ -8,9 +8,7 @@
 namespace Drupal\owlcarousel\Plugin\views\style;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\style\StylePluginBase;
-use Drupal\views\ViewExecutable;
 
 /**
  * OWL Carousel style plugin to render rows in a jquery plugin.
@@ -45,30 +43,6 @@ class ViewsOwlCarousel extends StylePluginBase {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
-    parent::init($view, $display, $options);
-
-    // Attach wolcarousel library to view element.
-    $view->element['#attached']['library'][] = 'owlcarousel/owlcarousel.jquery';
-    $view->element['#attached']['library'][] = 'owlcarousel/owlcarousel';
-
-    // Load configured configuration entity.
-    $prset = $view->display_handler->getOption('owlcarousel_preset');
-    $my_data = entity_load('owlcarousel_preset', $options['owlcarousel_preset']);
-
-    // Attach entity data and views dom id to drupal settings.
-    $view->element['#attached']['js'][] = array(
-      'data' => array(
-        'owlcarousel_id' => 'view-dom-id-' . $view->dom_id,
-        'owlcarousel' => $my_data
-      ),
-      'type' => 'setting',
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   protected function defineOptions() {
     $options = parent::defineOptions();
     $options['owlcarousel_preset'] = array('default' => '');
@@ -91,6 +65,30 @@ class ViewsOwlCarousel extends StylePluginBase {
       '#title' => t('OWL Carousel preset'),
       '#options' => $options,
       '#default_value' => $this->options['type'],
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preRender($result) {
+    parent::preRender($result);
+
+    // Attach owlcarousel library to view element.
+    $this->view->element['#attached']['library'][] = 'owlcarousel/owlcarousel.jquery';
+    $this->view->element['#attached']['library'][] = 'owlcarousel/owlcarousel';
+
+    // Load configured configuration entity.
+    $settings = entity_load('owlcarousel_preset', $this->options['owlcarousel_preset']);
+
+    // Attach entity data and views dom id to drupal settings.
+    $this->view->element['#attached']['js'][] = array(
+      'data' => array(
+        'owlcarousel' => array(
+          'view-dom-id-' . $this->view->dom_id => $settings,
+        ),
+      ),
+      'type' => 'setting',
     );
   }
 

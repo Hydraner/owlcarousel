@@ -8,38 +8,27 @@
   Drupal.behaviors.owlcarousel = {
     attach: function(context, settings) {
 
+      for (owlcarousel_id in settings.owlcarousel) {
+        // Initialize object.
+        var owl = $("." + owlcarousel_id);
+        if ($("." + owlcarousel_id + ' .view-content').length > 0) {
+          owl = $("." + owlcarousel_id + ' .view-content');
+        }
 
-      console.log(settings.owlcarousel_id);
-      console.log(settings);
+        // LazyLoad support.
+        //if (settings.owlcarousel[owlcarousel_id].lazyLoad) {
+        //  var images = owl.find('img');
+        //  $.each(images, function (i, image) {
+        //    $(image).attr('data-src', $(image).attr('src'));
+        //  });
+        //
+        //  images.addClass('lazyOwl');
+        //}
 
-      var owlcarousel_settings = settings.owlcarousel;
-      //var owlcarousel_settings = {items:1};
-      if ($("." + settings.owlcarousel_id + ' .view-content').length > 0) {
-        $("." + settings.owlcarousel_id + ' .view-content').owlCarousel(owlcarousel_settings);
+        // Attach settings.
+        owl.owlCarousel(settings.owlcarousel[owlcarousel_id]);
       }
-      else {
-        $("." + settings.owlcarousel_id).owlCarousel(owlcarousel_settings);
-      }
 
-
-      //for (var carousel in settings.owlcarousel) {
-      //  // Carousel instance.
-      //  var owl = $('#' + carousel);
-      //
-      //  // lazyLoad support.
-      //  if (settings.owlcarousel[carousel].settings.lazyLoad) {
-      //    var images = owl.find('img');
-      //
-      //    $.each(images, function(i, image) {
-      //      $(image).attr('data-src', $(image).attr('src'));
-      //    });
-      //
-      //    images.addClass('owl-lazy');
-      //  }
-      //
-      //  // Attach instance settings.
-      //  owl.owlCarousel(settings.owlcarousel[carousel].settings);
-      //}
     }
   };
 

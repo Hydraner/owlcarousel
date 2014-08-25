@@ -52,16 +52,31 @@ function template_preprocess_views_owl_carousel(&$variables) {
 
 }
 
-function owlcarousel_libraries_info() {
-  $library = drupal_get_path('module', 'owlcarousel');
-  $libraries['owlcarousel'] = array(
-    'name' => 'OWL Carousel',
-    'version' => '',
-    'files' => array(
-      'js' => array($library . '/owl.carousel.min.js'),
-//      'css' => array($library . '/assets/owl.carousel.css'),
-    ),
-  );
+//function owlcarousel_libraries_info() {
+//  $library = drupal_get_path('module', 'owlcarousel');
+//  $libraries['owlcarousel'] = array(
+//    'name' => 'OWL Carousel',
+//    'version' => '',
+//    'files' => array(
+//      'js' => array($library . '/owl.carousel.min.js'),
+////      'css' => array($library . '/assets/owl.carousel.css'),
+//    ),
+//  );
+//
+//  return $libraries;
+//}
 
-  return $libraries;
-}
+//function owlcarousel_libraries_info() {
+//  return [
+//    'owlcarousel.jquery' => [
+//      'name' => t('OwlCarousel'),
+//      'vendor url' => '',
+//      'download url' => '',
+//      'files' => [
+//        'js' => [
+//          'owlcarousel.js' => [],
+//        ]
+//      ],
+//    ],
+//  ];
+//}
