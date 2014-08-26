@@ -9,152 +9,19 @@ owlcarousel.preset.*:
     label:
       type: label
       label: 'Label'
-    items:
-      type: number
-      label: 'Items'
-    margin:
-      type: number
-      label: 'Margin'
-    loop:
-      type: boolean
-      label: 'Loop'
-    center:
-      type: checkbox
-      label: 'Center'
-    mouse_drag:
-      type: checkbox
-      label: 'Mouse Drag'
-    touch_drag:
-      type: checkbox
-      label: 'touch Drag'
-    pull_drag:
-      type: checkbox
-      label: 'Pull Drag'
-    free_drag:
-      type: checkbox
-      label: 'Free Drag'
-    stage_padding:
-      type: number
-      label: 'Stage Padding'
-    merge:
-      type: checkbox
-      label: 'Merge'
-    merge_fit:
-      type: checkbox
-      label: 'Merge Fit'
-    auto_width:
-      type: checkbox
-      label: 'Auto Width'
-    start_position:
-      type: number
-      label: 'Start Position'
-    url_hash_listener:
-      type: checkbox
-      label: 'URL Hash Listener'
-    navigation:
-      type: checkbox
-      label: 'Navigation'
-    nav_rewind:
-      type:
-      label: 'Nav Rewind'
-    nav_prev:
-      type: string
-      label: 'Navigation text for prev'
-      translatable: true
-    nav_next:
-      type: string
-      label: 'Navigation text for text'
-      translatable: true
-    slide_by:
-      type: number
-      label: 'Slide By'
-    dots:
-      type: checkbox
-      label: 'Dots'
-    dots_each:
-      type: number
-      label: 'Dots Each'
-    dot_data:
-      type: checkbox
-      label: 'Dot Data'
-    lazyLoad:
-      type: checkbox
-      label: 'Lazy Load'
-    lazy_content:
-      type: checkbox
-      label: 'Lazy Content'
-    autoplay:
-      type: checkbox
-      label: 'Autoplay'
-    autoplay_timeout:
-      type: number
-      label: 'Autoplay Timeout'
-    autoplay_hover_pause:
-      type: checkbox
-      label: 'Autoplay Hover Pause'
-    smart_speed:
-      type: number
-      label: 'Smart Speed'
-    fluid_speed:
-      type: number
-      label: 'Fluid Speed'
-    autoplay_speed:
-      type: number
-      label: 'Autoplay Speed'
-    nav_speed:
-      type: number
-      label: 'Navigation Speed'
-    dots_speed:
-      type: number
-      label: 'Dots Speed'
-    drag_end_speed:
-      type: number
-      label: 'Drag End Speed'
-    callbacks:
-      type: checkbox
-      label: 'Callbacks'
-    responsive_refresh_rate:
-      type: number
-      label: 'Responsive Refresh Rate'
-    responsive_base_element:
-      type: string
-      label: 'Responsive Base Element'
-    responsive_class:
-      type: checkbox
-      label: 'Responsive Class'
-    video:
-      type: checkbox
-      label: 'Video'
-    video_height:
-      type: checkbox
-      label: 'Video Height'
-    video_width:
-      type: checkbox
-      label: 'Video Width'
-    animate_out:
-      type: string
-      label: 'Animate Out'
-    animate_in:
-      type: string
-      label: 'Animate In'
-    fallback_easing:
-      type: string
-      label: 'Fallback Easing'
-    info:
-      type: string
-      label: 'Info'
-    nested_item_selector:
-      type: string
-      label: 'Nested Item Selector'
-    item_element:
-      type: string
-      label: 'Item Element'
-    stage_element:
-      type: string
-      label: 'Stage Element'
-    nav_container:
-      type: string
-      label: 'Navigation Container'
-    dots_container:
-      type: string
-      label: 'Pagination Container'
+    breakpoints:
+      type: sequence
+      label: 'Breakpoint configurations'
+      sequence:
+        - type: mapping
+          label: 'Configuration'
+          mapping:
+            id:
+              type: string
+            data:
+              type: mapping
+              label: 'Owl Carousel preset per breakpoint'
+              mapping:
+                items:
+                  type: integer
+                  label: 'Items'
