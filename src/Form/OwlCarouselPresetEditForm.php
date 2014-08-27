@@ -19,6 +19,8 @@ class OwlCarouselPresetEditForm extends OwlCarouselPresetFormBase {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
+    $this->entity->setBreakpoints($form_state);
+
     parent::save($form, $form_state);
     drupal_set_message($this->t('Changes to the preset have been saved.'));
   }

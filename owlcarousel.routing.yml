@@ -29,3 +29,19 @@ owlcarousel.preset_delete:
     _title: 'Delete preset'
   requirements:
     _permission: 'administer owl carousel presets'
+
+owlcarousel.breakpoint.add:
+  path: '/admin/config/user-interface/owlcarousel/presets/manage/{owlcarousel_preset}/add'
+  defaults:
+    _form: \Drupal\owlcarousel\Form\OwlCarouselBreakpointConfigurationAdd
+    _title: 'Add breakpoint'
+  requirements:
+    _permission: 'administer owl carousel presets'
+
+owlcarousel.breakpoint.remove:
+  path: '/admin/config/user-interface/owlcarousel/presets/manage/{owlcarousel_preset}/remove/{owlcarousel_breakpoint}'
+  defaults:
+    _form: \Drupal\owlcarousel\Form\OwlCarouselBreakpointConfigurationRemove
+    _title: 'Remove breakpoint'
+  requirements:
+    _permission: 'administer owl carousel presets'

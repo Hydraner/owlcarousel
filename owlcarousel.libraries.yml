@@ -1,12 +1,11 @@
 owlcarousel.jquery:
   version: VERSION
   js:
-    js/owlcarousel.min.js: {}
+    js/owlcarousel.js: {}
   css:
     theme:
       css/owl.carousel.css: {}
-      css/owl.theme.css: {}
-      css/owl.transitions.css: {}
+      css/owl.theme.default.css: {}
   dependencies:
     - core/jquery
 

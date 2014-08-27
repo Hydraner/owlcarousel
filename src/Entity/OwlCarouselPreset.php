@@ -8,6 +8,7 @@
 namespace Drupal\owlcarousel\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\owlcarousel\OwlCarouselPresetInterface;
 
@@ -61,6 +62,38 @@ class OwlCarouselPreset extends ConfigEntityBase implements OwlCarouselPresetInt
    * @var string
    */
   protected $replacementID;
+
+  public $breakpoints = array();
+
+  /**
+   * @param FormStateInterface $form_state
+   */
+  public function setBreakpoints(FormStateInterface $form_state) {
+    foreach ($form_state->getValue('breakpoints') as $delta => $data) {
+      $this->breakpoints[$delta]['id'] = $data['id'];
+      $this->breakpoints[$delta]['data'] = $data['data'];
+    }
+//    $this->breakpoints[] = array(
+//      'id' => $form_state->getValue('breakpoint'),
+//      'data' => array()
+//    );
+//    dsm($form_state->getValues());
+//    $this->breakpoints[0]['id'] = 'custom.id';
+//    $this->breakpoints[0]['data']['items'] = $form_state->getValue('items');
+//    $this->breakpoints[1]['id'] = 'custom.id.2';
+//    $this->breakpoints[1]['data']['items'] = $form_state->getValue('items');
+  }
+
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getData($property_name, $delta) {
+    if ($property_name != 'name' && $property_name != 'label') {
+      return isset($this->breakpoints[$delta]['data'][$property_name]) ? $this->breakpoints[$delta]['data'][$property_name] : NULL;
+    }
+//    return isset($this->$property_name) ? $this->$property_name : NULL;
+  }
 
   public $items = 3;
   public $margin = 0;

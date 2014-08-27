@@ -3,3 +3,9 @@ owlcarousel_preset_add_action:
   title: 'Add preset'
   appears_on:
     - owlcarousel.preset_list
+
+owlcarousel_breakpoint_add_action:
+  route_name: owlcarousel.breakpoint.add
+  title: 'Add breakpoint'
+  appears_on:
+    - owlcarousel.preset_edit

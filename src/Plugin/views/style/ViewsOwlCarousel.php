@@ -79,7 +79,21 @@ class ViewsOwlCarousel extends StylePluginBase {
     $this->view->element['#attached']['library'][] = 'owlcarousel/owlcarousel';
 
     // Load configured configuration entity.
-    $settings = entity_load('owlcarousel_preset', $this->options['owlcarousel_preset']);
+    // $settings = entity_load('owlcarousel_preset', $this->options['owlcarousel_preset']);
+
+
+    // Load configured configuration entity.
+    $owlcarousel_preset = entity_load('owlcarousel_preset', $this->options['owlcarousel_preset']);
+
+    $settings = array(
+      'responsiveClass' => true,
+    );
+    if (isset($owlcarousel_preset->breakpoints)) {
+      foreach ($owlcarousel_preset->breakpoints as $delta => $breakpoint_configuration) {
+        $breakpoint = entity_load('breakpoint', $breakpoint_configuration['id']);
+        $settings['responsive'][$breakpoint->mediaQuery] = $breakpoint_configuration['data'];
+      }
+    }
 
     // Attach entity data and views dom id to drupal settings.
     $this->view->element['#attached']['js'][] = array(

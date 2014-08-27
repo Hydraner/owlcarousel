@@ -14,6 +14,7 @@
         if ($("." + owlcarousel_id + ' .view-content').length > 0) {
           owl = $("." + owlcarousel_id + ' .view-content');
         }
+        owl.addClass('owl-carousel owl-theme');
 
         // LazyLoad support.
         //if (settings.owlcarousel[owlcarousel_id].lazyLoad) {
@@ -26,6 +27,7 @@
         //}
 
         // Attach settings.
+        console.log(settings.owlcarousel[owlcarousel_id]);
         owl.owlCarousel(settings.owlcarousel[owlcarousel_id]);
       }
 
