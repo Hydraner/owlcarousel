@@ -86,7 +86,7 @@ class ViewsOwlCarousel extends StylePluginBase {
       '#type' => 'select',
       '#title' => t('OWL Carousel preset'),
       '#options' => $options,
-      '#default_value' => $this->options['type'],
+      '#default_value' => $this->options['owlcarousel_preset'],
     );
   }
 
