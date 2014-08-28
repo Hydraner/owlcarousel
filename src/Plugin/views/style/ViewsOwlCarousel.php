@@ -110,7 +110,7 @@ class ViewsOwlCarousel extends StylePluginBase {
     $settings = array(
       'responsiveClass' => true,
     );
-    if (isset($owlcarousel_preset->breakpoints)) {
+    if (!empty($owlcarousel_preset->breakpoints)) {
       foreach ($owlcarousel_preset->breakpoints as $delta => $breakpoint_configuration) {
         $breakpoints = $this->breakpointManager->getDefinitions();
         $breakpoint = $breakpoints[$breakpoint_configuration['id']];
