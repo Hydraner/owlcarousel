@@ -18,7 +18,7 @@ use Drupal\owlcarousel\OwlCarouselPresetInterface;
  * @ConfigEntityType(
  *   id = "owlcarousel_preset",
  *   label = @Translation("Owl Carousel preset"),
- *   controllers = {
+ *   handlers = {
  *     "form" = {
  *       "add" = "Drupal\owlcarousel\Form\OwlCarouselPresetAddForm",
  *       "edit" = "Drupal\owlcarousel\Form\OwlCarouselPresetEditForm",

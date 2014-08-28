@@ -33,7 +33,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
    */
   protected $owlCarouselStorage;
 
-  protected $owlcarousel_preset;
+  protected $owlcarouselPreset;
 
   /**
    * Constructs a base class for image style add and edit forms.
@@ -44,7 +44,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
   public function __construct(EntityStorageInterface $owlcarousel_preset_storage) {
     $this->owlCarouselStorage = $owlcarousel_preset_storage;
 
-    $this->owlcarousel_preset = \Drupal::routeMatch()->getRawParameter('owlcarousel_preset');
+    $this->owlcarouselPreset = \Drupal::routeMatch()->getRawParameter('owlcarousel_preset');
   }
 
   /**
@@ -86,7 +86,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
       '#required' => TRUE,
     );
 
-dsm($this->entity->get('breakpoints'));
+//dsm($this->entity->get('breakpoints'));
 
     $form['breakpoints_group'] = array(
       '#type' => 'vertical_tabs',
@@ -102,7 +102,7 @@ dsm($this->entity->get('breakpoints'));
     $breakpoints = $this->entity->get('breakpoints');
     if (!empty($breakpoints)) {
       foreach ($breakpoints as $delta => $data) {
-        dsm($delta);
+//        dsm($delta);
 
         $form['breakpoints'][$delta] = array(
           '#type' => 'details',
@@ -123,7 +123,7 @@ dsm($this->entity->get('breakpoints'));
         );
 
         $form['breakpoints'][$delta]['cancel'] = array(
-          '#markup' => $this->l($this->t('Remove'), 'owlcarousel.breakpoint.remove', array('owlcarousel_preset' => $this->owlcarousel_preset, 'owlcarousel_breakpoint' => $data['id'])),
+          '#markup' => $this->l($this->t('Remove'), 'owlcarousel.breakpoint.remove', array('owlcarousel_preset' => $this->owlcarouselPreset, 'owlcarousel_breakpoint' => $data['id'])),
         );
       }
     }

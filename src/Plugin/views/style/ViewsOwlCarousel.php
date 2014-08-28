@@ -7,8 +7,10 @@
 
 namespace Drupal\owlcarousel\Plugin\views\style;
 
+use Drupal\breakpoint\BreakpointManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\style\StylePluginBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * OWL Carousel style plugin to render rows in a jquery plugin.
@@ -39,6 +41,26 @@ class ViewsOwlCarousel extends StylePluginBase {
    * {@inheritdoc}
    */
   protected $usesGrouping = FALSE;
+
+
+  /**
+   * Constructs a Plugin object.
+   */
+  public function __construct(BreakpointManagerInterface $breakpoint_manager, array $configuration, $plugin_id, $plugin_definition) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+
+    $this->breakpointManager = $breakpoint_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $container->get('breakpoint.manager'),
+      $configuration, $plugin_id, $plugin_definition
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -90,8 +112,9 @@ class ViewsOwlCarousel extends StylePluginBase {
     );
     if (isset($owlcarousel_preset->breakpoints)) {
       foreach ($owlcarousel_preset->breakpoints as $delta => $breakpoint_configuration) {
-        $breakpoint = entity_load('breakpoint', $breakpoint_configuration['id']);
-        $settings['responsive'][$breakpoint->mediaQuery] = $breakpoint_configuration['data'];
+        $breakpoints = $this->breakpointManager->getDefinitions();
+        $breakpoint = $breakpoints[$breakpoint_configuration['id']];
+        $settings['responsive'][$breakpoint['mediaQuery']] = $breakpoint_configuration['data'];
       }
     }
 

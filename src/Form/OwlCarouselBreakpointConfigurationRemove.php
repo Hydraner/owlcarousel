@@ -21,21 +21,21 @@ class OwlCarouselBreakpointConfigurationRemove extends ConfirmFormBase {
    *
    * @var string
    */
-  protected $owlcarousel_preset;
+  protected $owlcarouselPreset;
 
   /**
    * The OWL Carousel breakpoint config id.
    *
    * @var string
    */
-  protected $breakpoint_config_id;
+  protected $breakpointConfigId;
 
   /**
    * {@inheritdoc}
    */
   public function __construct() {
-    $this->owlcarousel_preset = \Drupal::routeMatch()->getRawParameter('owlcarousel_preset');
-    $this->breakpoint_config_id = \Drupal::routeMatch()->getRawParameter('owlcarousel_breakpoint');
+    $this->owlcarouselPreset = \Drupal::routeMatch()->getRawParameter('owlcarousel_preset');
+    $this->breakpointConfigId = \Drupal::routeMatch()->getRawParameter('owlcarousel_breakpoint');
   }
 
   /**
@@ -49,7 +49,7 @@ class OwlCarouselBreakpointConfigurationRemove extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('owlcarousel.preset_edit', array('owlcarousel_preset' => $this->owlcarousel_preset));
+    return new Url('owlcarousel.preset_edit', array('owlcarousel_preset' => $this->owlcarouselPreset));
   }
 
   /**
@@ -63,12 +63,12 @@ class OwlCarouselBreakpointConfigurationRemove extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $form_state->setRedirect('owlcarousel.preset_edit', array('owlcarousel_preset' => $this->owlcarousel_preset));
+    $form_state->setRedirect('owlcarousel.preset_edit', array('owlcarousel_preset' => $this->owlcarouselPreset));
 
-    $owlcarousel_preset_entity = entity_load('owlcarousel_preset', $this->owlcarousel_preset);
+    $owlcarousel_preset_entity = entity_load('owlcarousel_preset', $this->owlcarouselPreset);
     $breakpoints = $owlcarousel_preset_entity->get('breakpoints');
     foreach ($breakpoints as $delta => $breakpoint_config) {
-      if ($breakpoint_config['id'] == $this->breakpoint_config_id) {
+      if ($breakpoint_config['id'] == $this->breakpointConfigId) {
         unset($owlcarousel_preset_entity->breakpoints[$delta]);
       }
     }
