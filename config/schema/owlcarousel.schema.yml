@@ -25,3 +25,9 @@ owlcarousel.preset.*:
                 items:
                   type: integer
                   label: 'Items'
+                loop:
+                  type: boolean
+                  label: 'Loop'
+                center:
+                  type: boolean
+                  label: 'Center'

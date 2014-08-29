@@ -101,17 +101,18 @@ class ViewsOwlCarousel extends StylePluginBase {
     $this->view->element['#attached']['library'][] = 'owlcarousel/owlcarousel';
 
     // Load configured configuration entity.
-    // $settings = entity_load('owlcarousel_preset', $this->options['owlcarousel_preset']);
-
-
-    // Load configured configuration entity.
     $owlcarousel_preset = entity_load('owlcarousel_preset', $this->options['owlcarousel_preset']);
 
-    $settings = array(
-      'responsiveClass' => true,
-    );
+    $settings = array();
     if (!empty($owlcarousel_preset->breakpoints)) {
       foreach ($owlcarousel_preset->breakpoints as $delta => $breakpoint_configuration) {
+        if ($delta === 'default') {
+          foreach ($breakpoint_configuration['data'] as $key => $value) {
+            $settings[$key] = $value;
+          }
+          continue;
+        }
+        $settings['responsiveClass'] = true;
         $breakpoints = $this->breakpointManager->getDefinitions();
         $breakpoint = $breakpoints[$breakpoint_configuration['id']];
         $settings['responsive'][$breakpoint['mediaQuery']] = $breakpoint_configuration['data'];

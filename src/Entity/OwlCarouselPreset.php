@@ -90,36 +90,95 @@ class OwlCarouselPreset extends ConfigEntityBase implements OwlCarouselPresetInt
    */
   public function getData($property_name, $delta) {
     if ($property_name != 'name' && $property_name != 'label') {
-      return isset($this->breakpoints[$delta]['data'][$property_name]) ? $this->breakpoints[$delta]['data'][$property_name] : NULL;
+      if (isset($this->breakpoints[$delta]['data'][$property_name])) {
+        return $this->breakpoints[$delta]['data'][$property_name];
+      }
+      else if ($default_value = $this->getDefaultValue($property_name)) {
+        return $default_value;
+      }
+      return NULL;
     }
 //    return isset($this->$property_name) ? $this->$property_name : NULL;
   }
 
-  public $items = 3;
-  public $margin = 0;
-  public $mouse_drag = TRUE;
-  public $touch_drag = TRUE;
-  public $pull_drag = TRUE;
-  public $stage_padding = 0;
-  public $merge_fit = TRUE;
-  public $start_position = 0;
-  public $nav_rewind = TRUE;
-  public $nav_prev = 'prev';
-  public $nav_next = 'next';
-  public $slide_by = 1;
-  public $dots = TRUE;
-  public $dots_each = 0;
-  public $autoplay_timeout = 5000;
-  public $smart_speed = 250;
-  public $fluid_speed = 250;
-  public $autoplay_speed = 0;
-  public $nav_speed = 0;
-  public $dots_speed = 0;
-  public $responsive_refresh_rate = 200;
-  public $responsive_base_element = 'window';
-  public $fallback_easing = 'swing';
-  public $item_element = 'div';
-  public $stage_element = 'div';
+  public function getDefaultValue($property_name) {
+    $values = array(
+      'items' => 3,
+      'loop' => false,
+      'center' => false,
+      'rewind' => false,
+      'mouseDrag' => true,
+      'touchDrag' => true,
+      'pullDrag' => true,
+      'freeDrag' => false,
+      'margin' => 0,
+      'stagePadding' => 0,
+      'merge' => false,
+      'mergeFit' => true,
+      'autoWidth' => false,
+      'autoHeight' => false,
+      'nav' => false,
+      'navText' => '[&#x27;next&#x27;,&#x27;prev&#x27;]',
+      'navRewind' => false,
+      'slideBy' => 1,
+      'dots' => true,
+      'dotsEach' => false,
+      'startPosition' => 0,
+      'rtl' => false,
+      'animateOut' => false,
+      'animateIn' => false,
+      'autoplay' => false,
+      'autoplayTimeout' => 5000,
+      'autoplaySpeed' => false,
+      'navSpeed' => false,
+      'dotsSpeed' => false,
+      'smartSpeed' => 250,
+      'fluidSpeed' => false,
+      'dragEndSpeed' => false,
+      'responsiveRefreshRate' => 200,
+      'fallbackEasing' => 'swing',
+      'nestedItemSelector' => false,
+      'itemElement' => 'div',
+      'stageElement' => 'div',
+      'refreshClass' => 'owl-refresh',
+      'loadedClass' => 'owl-loaded',
+      'loadingClass' => 'owl-loading',
+      'rtlClass' => 'owl-rtl',
+      'dragClass' => 'owl-drag',
+      'itemClass' => 'owl-item',
+      'stageClass' => 'owl-stage',
+      'stageOuterClass' => 'owl-stage-outer',
+      'grabClass' => 'owl-grab'
+    );
+
+    return isset($values[$property_name]) ? $values[$property_name] : FALSE;
+  }
+
+//  public $items = 3;
+//  public $margin = 0;
+//  public $mouse_drag = TRUE;
+//  public $touch_drag = TRUE;
+//  public $pull_drag = TRUE;
+//  public $stage_padding = 0;
+//  public $merge_fit = TRUE;
+//  public $start_position = 0;
+//  public $nav_rewind = TRUE;
+//  public $nav_prev = 'prev';
+//  public $nav_next = 'next';
+//  public $slide_by = 1;
+//  public $dots = TRUE;
+//  public $dots_each = 0;
+//  public $autoplay_timeout = 5000;
+//  public $smart_speed = 250;
+//  public $fluid_speed = 250;
+//  public $autoplay_speed = 0;
+//  public $nav_speed = 0;
+//  public $dots_speed = 0;
+//  public $responsive_refresh_rate = 200;
+//  public $responsive_base_element = 'window';
+//  public $fallback_easing = 'swing';
+//  public $item_element = 'div';
+//  public $stage_element = 'div';
 
   /**
    * Overrides Drupal\Core\Entity\Entity::id().
