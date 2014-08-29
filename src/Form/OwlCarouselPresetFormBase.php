@@ -109,11 +109,17 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
       '#description' => $this->t('Show next/prev buttons.'),
       '#default_value' => $this->entity->getData('nav', $delta),
     );
-    $form['breakpoints'][$delta]['base']['data']['navText'] = array(
+    $form['breakpoints'][$delta]['base']['data']['nav_text_next'] = array(
       '#type' => 'textfield',
-      '#title' => $this->t('Nav text'),
-      '#description' => $this->t('HTML allowed. Comma seperated list, the [] brackets needs to be set around the string.'),
-      '#default_value' => $this->entity->getData('navText', $delta),
+      '#title' => $this->t('Nav text next'),
+      '#description' => $this->t('HTML allowed.'),
+      '#default_value' => $this->entity->getData('nav_text_next', $delta),
+    );
+    $form['breakpoints'][$delta]['base']['data']['nav_text_prev'] = array(
+      '#type' => 'textfield',
+      '#title' => $this->t('Nav text prev'),
+      '#description' => $this->t('HTML allowed.'),
+      '#default_value' => $this->entity->getData('nav_text_prev', $delta),
     );
     $form['breakpoints'][$delta]['base']['data']['dots'] = array(
       '#type' => 'checkbox',

@@ -104,18 +104,26 @@ class ViewsOwlCarousel extends StylePluginBase {
     $owlcarousel_preset = entity_load('owlcarousel_preset', $this->options['owlcarousel_preset']);
 
     $settings = array();
+    // @todo: Add getSettings method to entity instead of doing it here.
     if (!empty($owlcarousel_preset->breakpoints)) {
       foreach ($owlcarousel_preset->breakpoints as $delta => $breakpoint_configuration) {
         if ($delta === 'default') {
           foreach ($breakpoint_configuration['data'] as $key => $value) {
             $settings[$key] = $value;
           }
+          $settings['navText'] = array($settings['nav_text_prev'], $settings['nav_text_next']);
+          unset($settings['nav_text_prev']);
+          unset($settings['nav_text_next']);
           continue;
         }
         $settings['responsiveClass'] = true;
         $breakpoints = $this->breakpointManager->getDefinitions();
         $breakpoint = $breakpoints[$breakpoint_configuration['id']];
         $settings['responsive'][$breakpoint['mediaQuery']] = $breakpoint_configuration['data'];
+
+        $settings['responsive'][$breakpoint['mediaQuery']]['navText'] = array($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_prev'], $settings['nav_text_next']);
+        unset($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_prev']);
+        unset($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_next']);
       }
     }
 
