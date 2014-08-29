@@ -111,9 +111,14 @@ class ViewsOwlCarousel extends StylePluginBase {
           foreach ($breakpoint_configuration['data'] as $key => $value) {
             $settings[$key] = $value;
           }
-          $settings['navText'] = array($settings['nav_text_prev'], $settings['nav_text_next']);
-          unset($settings['nav_text_prev']);
-          unset($settings['nav_text_next']);
+          if (isset($settings['nav_text_prev'])) {
+            $settings['navText'][] = $settings['nav_text_prev'];
+            unset($settings['nav_text_prev']);
+          }
+          if (isset($settings['nav_text_next'])) {
+            $settings['navText'][] = $settings['nav_text_next'];
+            unset($settings['nav_text_next']);
+          }
           // Remove unneeded properties.
           foreach ($settings as $property_name => $value) {
             if ($owlcarousel_preset->getDefaultValue($property_name) == $value) {
@@ -127,9 +132,6 @@ class ViewsOwlCarousel extends StylePluginBase {
         $breakpoint = $breakpoints[$breakpoint_configuration['id']];
         $settings['responsive'][$breakpoint['mediaQuery']] = $breakpoint_configuration['data'];
 
-        $settings['responsive'][$breakpoint['mediaQuery']]['navText'] = array($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_prev'], $settings['nav_text_next']);
-        unset($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_prev']);
-        unset($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_next']);
         // Remove unneeded properties.
         foreach ($settings['responsive'][$breakpoint['mediaQuery']] as $property_name => $value) {
           if ($owlcarousel_preset->getDefaultValue($property_name) == $value) {
