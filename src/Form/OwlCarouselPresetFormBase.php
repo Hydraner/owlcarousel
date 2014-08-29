@@ -248,7 +248,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
       '#default_value' => $this->entity->getData('dotsSpeed', $delta),
     );
     $form['breakpoints'][$delta]['advanced']['data']['dragEndSpeed'] = array(
-      '#type' => 'checkbox',
+      '#type' => 'integer',
       '#title' => $this->t('Drag end speed'),
       '#description' => $this->t('Drag end speed.'),
       '#default_value' => $this->entity->getData('dragEndSpeed', $delta),

@@ -31,3 +31,81 @@ owlcarousel.preset.*:
                 center:
                   type: boolean
                   label: 'Center'
+                navigation:
+                  type: boolean
+                  label: 'Navigation'
+                dots:
+                  type: boolean
+                  label: 'Dots'
+                nav_text_prev:
+                  type: string
+                  label: 'Nav text prev'
+                nav_text_next:
+                  type: string
+                  label: 'Nav text next'
+                mouse_drag:
+                  type: boolean
+                  label: 'Mouse Drag'
+                touch_drag:
+                  type: boolean
+                  label: 'touch Drag'
+                pull_drag:
+                  type: checkbox
+                  label: 'boolean Drag'
+                free_drag:
+                  type: boolean
+                  label: 'Free Drag'
+                stage_padding:
+                  type: integer
+                  label: 'Stage Padding'
+                merge:
+                  type: boolean
+                  label: 'Merge'
+                merge_fit:
+                  type: boolean
+                  label: 'Merge Fit'
+                auto_width:
+                  type: boolean
+                  label: 'Auto Width'
+                auto_height:
+                  type: boolean
+                  label: 'Auto height'
+                nav_rewind:
+                  type: boolean
+                  label: 'Nav Rewind'
+                slide_by:
+                  type: integer
+                  label: 'Slide By'
+                dots_each:
+                  type: integer
+                  label: 'Dots Each'
+                autoplay:
+                  type: boolean
+                  label: 'Autoplay'
+                autoplay_timeout:
+                  type: integer
+                  label: 'Autoplay Timeout'
+                autoplay_speed:
+                  type: integert
+                  label: 'Autoplay Speed'
+                nav_speed:
+                  type: integert
+                  label: 'Navigation Speed'
+                dots_speed:
+                  type: integert
+                  label: 'Dots Speed'
+                drag_end_speed:
+                  type: integert
+                  label: 'Drag End Speed'
+                responsive_refresh_rate:
+                  type: integert
+                  label: 'Responsive Refresh Rate'
+                animate_out:
+                  type: boolean
+                  label: 'Animate Out'
+                animate_in:
+                  type: boolean
+                  label: 'Animate In'
+                fallback_easing:
+                  type: string
+                  label: 'Fallback Easing'
