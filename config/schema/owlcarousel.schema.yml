@@ -31,7 +31,7 @@ owlcarousel.preset.*:
                 center:
                   type: boolean
                   label: 'Center'
-                navigation:
+                nav:
                   type: boolean
                   label: 'Navigation'
                 dots:
@@ -43,69 +43,75 @@ owlcarousel.preset.*:
                 nav_text_next:
                   type: string
                   label: 'Nav text next'
-                mouse_drag:
+                mouseDrag:
                   type: boolean
                   label: 'Mouse Drag'
-                touch_drag:
+                touchDrag:
                   type: boolean
                   label: 'touch Drag'
-                pull_drag:
-                  type: checkbox
+                pullDrag:
+                  type: boolean
                   label: 'boolean Drag'
-                free_drag:
+                freeDrag:
                   type: boolean
                   label: 'Free Drag'
-                stage_padding:
+                stagePadding:
                   type: integer
                   label: 'Stage Padding'
                 merge:
                   type: boolean
                   label: 'Merge'
-                merge_fit:
+                mergeFit:
                   type: boolean
                   label: 'Merge Fit'
-                auto_width:
+                autoWidth:
                   type: boolean
                   label: 'Auto Width'
-                auto_height:
+                autoHeight:
                   type: boolean
                   label: 'Auto height'
-                nav_rewind:
+                navRewind:
                   type: boolean
                   label: 'Nav Rewind'
-                slide_by:
+                slideBy:
                   type: integer
                   label: 'Slide By'
-                dots_each:
+                dotsEach:
                   type: integer
                   label: 'Dots Each'
                 autoplay:
                   type: boolean
                   label: 'Autoplay'
-                autoplay_timeout:
+                autoplayTimeout:
                   type: integer
                   label: 'Autoplay Timeout'
-                autoplay_speed:
-                  type: integert
+                autoplaySpeed:
+                  type: integer
                   label: 'Autoplay Speed'
-                nav_speed:
-                  type: integert
+                smartSpeed:
+                  type: integer
+                  label: 'Smart Speed'
+                fluidSpeed:
+                  type: integer
+                  label: 'Fluid Speed'
+                navSpeed:
+                  type: integer
                   label: 'Navigation Speed'
-                dots_speed:
-                  type: integert
+                dotsSpeed:
+                  type: integer
                   label: 'Dots Speed'
-                drag_end_speed:
-                  type: integert
+                dragEndSpeed:
+                  type: integer
                   label: 'Drag End Speed'
-                responsive_refresh_rate:
-                  type: integert
+                responsiveRefreshRate:
+                  type: integer
                   label: 'Responsive Refresh Rate'
-                animate_out:
+                animateOut:
                   type: boolean
                   label: 'Animate Out'
-                animate_in:
+                animateIn:
                   type: boolean
                   label: 'Animate In'
-                fallback_easing:
+                fallbackEasing:
                   type: string
                   label: 'Fallback Easing'
