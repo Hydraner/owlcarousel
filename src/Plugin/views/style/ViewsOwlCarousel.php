@@ -114,6 +114,12 @@ class ViewsOwlCarousel extends StylePluginBase {
           $settings['navText'] = array($settings['nav_text_prev'], $settings['nav_text_next']);
           unset($settings['nav_text_prev']);
           unset($settings['nav_text_next']);
+          // Remove unneeded properties.
+          foreach ($settings as $property_name => $value) {
+            if ($owlcarousel_preset->getDefaultValue($property_name) == $value) {
+              unset($settings[$property_name]);
+            }
+          }
           continue;
         }
         $settings['responsiveClass'] = true;
@@ -124,6 +130,12 @@ class ViewsOwlCarousel extends StylePluginBase {
         $settings['responsive'][$breakpoint['mediaQuery']]['navText'] = array($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_prev'], $settings['nav_text_next']);
         unset($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_prev']);
         unset($settings['responsive'][$breakpoint['mediaQuery']]['nav_text_next']);
+        // Remove unneeded properties.
+        foreach ($settings['responsive'][$breakpoint['mediaQuery']] as $property_name => $value) {
+          if ($owlcarousel_preset->getDefaultValue($property_name) == $value) {
+            unset($settings['responsive'][$breakpoint['mediaQuery']][$property_name]);
+          }
+        }
       }
     }
 
