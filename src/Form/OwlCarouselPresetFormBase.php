@@ -56,6 +56,21 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
     );
   }
 
+  private function getDefaultFormArray(&$form, $delta, $data) {
+
+    $form['breakpoints'][$delta]['base']['data']['nav_text_next'] = array(
+      '#type' => 'textfield',
+      '#title' => $this->t('Nav text next'),
+      '#description' => $this->t('HTML allowed.'),
+      '#default_value' => $this->entity->getData('nav_text_next', $delta),
+    );
+    $form['breakpoints'][$delta]['base']['data']['nav_text_prev'] = array(
+      '#type' => 'textfield',
+      '#title' => $this->t('Nav text prev'),
+      '#description' => $this->t('HTML allowed.'),
+      '#default_value' => $this->entity->getData('nav_text_prev', $delta),
+    );
+  }
   private function getFormArray(&$form, $delta, $data) {
 
     $form['breakpoints'][$delta] = array(
@@ -108,18 +123,6 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
       '#title' => $this->t('Navigation'),
       '#description' => $this->t('Show next/prev buttons.'),
       '#default_value' => $this->entity->getData('nav', $delta),
-    );
-    $form['breakpoints'][$delta]['base']['data']['nav_text_next'] = array(
-      '#type' => 'textfield',
-      '#title' => $this->t('Nav text next'),
-      '#description' => $this->t('HTML allowed.'),
-      '#default_value' => $this->entity->getData('nav_text_next', $delta),
-    );
-    $form['breakpoints'][$delta]['base']['data']['nav_text_prev'] = array(
-      '#type' => 'textfield',
-      '#title' => $this->t('Nav text prev'),
-      '#description' => $this->t('HTML allowed.'),
-      '#default_value' => $this->entity->getData('nav_text_prev', $delta),
     );
     $form['breakpoints'][$delta]['base']['data']['dots'] = array(
       '#type' => 'checkbox',
@@ -367,6 +370,9 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
           $form['breakpoints'][$delta]['cancel'] = array(
             '#markup' => $this->l($this->t('Remove'), 'owlcarousel.breakpoint.remove', array('owlcarousel_preset' => $this->owlcarouselPreset, 'owlcarousel_breakpoint' => $data['id'])),
           );
+        }
+        else {
+          $this->getDefaultFormArray($form, $delta, $data);
         }
       }
     }
