@@ -10,6 +10,7 @@ namespace Drupal\owlcarousel\Form;
 use Drupal\breakpoint\BreakpointManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -84,7 +85,7 @@ class OwlCarouselBreakpointConfigurationAdd extends FormBase {
 
     // @todo: Add remove method.
     $form['actions']['cancel'] = array(
-      '#markup' => $this->l($this->t('Cancel'), 'owlcarousel.preset_edit', array('owlcarousel_preset' => $this->owlcarouselPreset)),
+      '#markup' => $this->l($this->t('Cancel'), Url::fromRoute('owlcarousel.preset_edit', ['owlcarousel_preset' => $this->owlcarouselPreset])),
     );
 
     return $form;

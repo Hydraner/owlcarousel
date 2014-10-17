@@ -12,6 +12,7 @@ namespace Drupal\owlcarousel\Form;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -320,7 +321,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
         $this->getFormArray($form, $delta, $data);
         if ($delta !== 'default') {
           $form['breakpoints'][$delta]['cancel'] = array(
-            '#markup' => $this->l($this->t('Remove'), 'owlcarousel.breakpoint.remove', array('owlcarousel_preset' => $this->owlcarouselPreset, 'owlcarousel_breakpoint' => $data['id'])),
+            '#markup' => $this->l($this->t('Remove'), Url::fromRoute('owlcarousel.breakpoint.remove', ['owlcarousel_preset' => $this->owlcarouselPreset, 'owlcarousel_breakpoint' => $data['id']])),
           );
         }
         else {
@@ -338,7 +339,7 @@ abstract class OwlCarouselPresetFormBase extends EntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $this->entity->save();
-    $form_state['redirect_route'] = $this->entity->urlInfo('edit-form');
+    $form_state->setRedirectUrl($this->entity->urlInfo('edit-form'));
   }
 
 }
